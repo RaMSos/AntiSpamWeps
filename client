@@ -1,0 +1,30 @@
+timer = {}
+addEventHandler("onClientPlayerWeaponFire", localPlayer,
+function(weapon)
+    if  weapon == 36  then
+        setElementData(localPlayer, "anti repeater", true);
+        if ( getElementData(localPlayer, "anti repeater") == true ) then
+           
+            timer[source] = setTimer( function()
+            toggleControl("fire", true)
+            toggleControl("aim_weapon", true);
+            setElementData(localPlayer, "anti repeater", false);
+            removeEventHandler("onClientPlayerWeaponSwitch", getRootElement(), cancelShots);
+	    removeEventHandler("onClientPlayerWeaponFire", getRootElement(), cancelShots);
+            end, 7000, 1 )
+            addEventHandler("onClientPlayerWeaponSwitch", getRootElement(), cancelShots);
+            addEventHandler("onClientPlayerWeaponFire", getRootElement(), cancelShots);
+        end
+    end
+end)
+ 
+function cancelShots()
+    if ( getPedWeapon(localPlayer) == 36 ) then
+
+        toggleControl("fire", false)
+toggleControl("aim_weapon", false);
+        else
+toggleControl("aim_weapon", true)
+        toggleControl("fire", true);  
+    end
+end
